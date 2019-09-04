@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,6 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -30,9 +34,10 @@ import com.android.volley.toolbox.Volley;
 public class LoginFragment extends Fragment {
 
     private View view;
-    private EditText etEmail;
+    private EditText etUser;
     private EditText etPass;
     private Button btnLogin;
+    private TextView tvMensaje;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,33 +52,46 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        etEmail = view.findViewById(R.id.tvEmail);
+        etUser = view.findViewById(R.id.tvEmail);
         etPass = view.findViewById(R.id.tvPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
+        tvMensaje =  view.findViewById(R.id.tvMensaje);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getContext());
-                String url ="http://192.168.1.21";
+                String url ="http://192.168.1.131/ingreso";
 
                 // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 // Display the first 500 characters of the response string.
-                                Toast.makeText(getContext(),"Response is: "+ response.substring(0,500),Toast.LENGTH_LONG)
-                                        .show();
+                                //Toast.makeText(getContext(),"Response is: "+ response.substring(0,500),Toast.LENGTH_LONG).show();
+                                tvMensaje.setText("Response is: "+ response);
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(),"That didn't work!",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),"That didn't work! " + error.getMessage(),Toast.LENGTH_LONG).show();
+                        tvMensaje.setText("That didn't work! " + error.getMessage());
                     }
-                });
+                }){
+                //Data a enviar
+                @Override
+                protected Map<String, String> getParams () {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("usuario", etUser.getText().toString());
+                    params.put("contrasena", etPass.getText().toString());
 
-// Add the request to the RequestQueue.
+                    return params;
+                }
+                };
+
+                // Add the request to the RequestQueue.
                 queue.add(stringRequest);
 
             }
