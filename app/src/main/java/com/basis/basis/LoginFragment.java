@@ -29,10 +29,10 @@ import com.android.volley.toolbox.Volley;
  */
 public class LoginFragment extends Fragment {
 
-    View view;
-    EditText etEmail;
-    EditText etPass;
-    Button btnLogin;
+    private View view;
+    private EditText etEmail;
+    private EditText etPass;
+    private Button btnLogin;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getContext());
-                String url ="http://www.google.com";
+                String url ="http://192.168.1.21";
 
                 // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
