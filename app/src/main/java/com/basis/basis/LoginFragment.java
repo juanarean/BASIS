@@ -1,11 +1,13 @@
 package com.basis.basis;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +74,10 @@ public class LoginFragment extends Fragment {
                                 // Display the first 500 characters of the response string.
                                 //Toast.makeText(getContext(),"Response is: "+ response.substring(0,500),Toast.LENGTH_LONG).show();
                                 tvMensaje.setText("Response is: "+ response);
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("usuario", etUser.getText().toString());
+                                editor.putString("password", etPass.getText().toString());
                             }
                         }, new Response.ErrorListener() {
                     @Override
