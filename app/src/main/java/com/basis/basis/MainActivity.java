@@ -3,6 +3,8 @@ package com.basis.basis;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         Toast.makeText(getApplicationContext(),"Ingreso exitoso", LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override

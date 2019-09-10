@@ -1,6 +1,7 @@
 package com.basis.basis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -78,6 +79,9 @@ public class LoginFragment extends Fragment {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("usuario", etUser.getText().toString());
                                 editor.putString("password", etPass.getText().toString());
+                                // Paso al siguiente Activity
+                                Intent intent = new Intent(getActivity(),Main2Activity.class);
+                                startActivity(intent);
                             }
                         }, new Response.ErrorListener() {
                     @Override
