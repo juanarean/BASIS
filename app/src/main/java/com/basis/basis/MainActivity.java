@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(),"Verificar VPN", LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                startActivity(intent);
             }
         }){
             //Data a enviar
