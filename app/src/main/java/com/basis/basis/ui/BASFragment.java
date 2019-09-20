@@ -1,20 +1,18 @@
-package com.basis.basis;
+package com.basis.basis.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.basis.basis.BAS;
+import com.basis.basis.R;
 
-import com.basis.basis.dummy.DummyContent;
-import com.basis.basis.dummy.DummyContent.DummyItem;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +22,10 @@ import java.util.List;
  * interface.
  */
 public class BASFragment extends Fragment {
+
+    RecyclerView recyclerView;
+    MyBASRecyclerViewAdapter adapter;
+    List<BAS> basList;
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -57,7 +59,13 @@ public class BASFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyBASRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            basList = new ArrayList<>();
+            basList.add(new BAS("BAS19-0001-01", "Phoenix"));
+            basList.add(new BAS("BAS19-0002-01", "Mabxience"));
+            basList.add(new BAS("BAS19-0003-01", "Catalent"));
+
+            adapter = new MyBASRecyclerViewAdapter(basList, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -92,6 +100,6 @@ public class BASFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(BAS item);
     }
 }

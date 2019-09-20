@@ -1,4 +1,4 @@
-package com.basis.basis;
+package com.basis.basis.db.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -13,10 +13,10 @@ public class ClientsEntity {
     private int Longitud;
     private int Latitud;
 
-    public ClientsEntity(String cliente, int longitud, int latitud) {
-        Cliente = cliente;
-        Longitud = longitud;
-        Latitud = latitud;
+    public ClientsEntity(String Cliente, int Longitud, int Latitud) {
+        this.Cliente = Cliente;
+        this.Longitud = Longitud;
+        this.Latitud = Latitud;
     }
 
     public int getId() {

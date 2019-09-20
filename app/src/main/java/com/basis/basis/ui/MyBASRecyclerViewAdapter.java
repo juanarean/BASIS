@@ -1,28 +1,26 @@
-package com.basis.basis;
+package com.basis.basis.ui;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.basis.basis.BASFragment.OnListFragmentInteractionListener;
-import com.basis.basis.dummy.DummyContent.DummyItem;
-
+import com.basis.basis.BAS;
+import com.basis.basis.ui.BASFragment.OnListFragmentInteractionListener;
+import com.basis.basis.R;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link BAS} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<BAS> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyBASRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyBASRecyclerViewAdapter(List<BAS> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +35,8 @@ public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mBasView.setText(mValues.get(position).getBasNumber());
+        holder.mClientView.setText(mValues.get(position).getCliente());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +57,20 @@ public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mBasView;
+        public final TextView mClientView;
+        public BAS mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mBasView = (TextView) view.findViewById(R.id.tvBAS);
+            mClientView = (TextView) view.findViewById(R.id.tvCliente);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mBasView.getText() + "'";
         }
     }
 }

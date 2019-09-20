@@ -1,4 +1,4 @@
-package com.basis.basis;
+package com.basis.basis.db.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

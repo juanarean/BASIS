@@ -1,4 +1,4 @@
-package com.basis.basis;
+package com.basis.basis.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basis.basis.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +103,8 @@ public class LoginFragment extends Fragment {
 
                 // Add the request to the RequestQueue.
                 queue.add(stringRequest);
+                Intent intent = new Intent(getActivity(),Main2Activity.class);
+                startActivity(intent);
 
             }
         });

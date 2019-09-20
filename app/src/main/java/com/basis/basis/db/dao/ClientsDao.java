@@ -1,10 +1,12 @@
-package com.basis.basis;
+package com.basis.basis.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.basis.basis.db.entity.ClientsEntity;
 
 import java.util.List;
 

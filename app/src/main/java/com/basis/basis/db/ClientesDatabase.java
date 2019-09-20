@@ -1,10 +1,11 @@
-package com.basis.basis;
+package com.basis.basis.db;
 
 import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import com.basis.basis.db.dao.ClientsDao;
+import com.basis.basis.db.entity.ClientsEntity;
 
 @Database(entities = {ClientsEntity.class}, version = 1)
 public abstract class ClientesDatabase extends RoomDatabase {
