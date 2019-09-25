@@ -2,6 +2,7 @@ package com.basis.basis.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basis.basis.MyIntentService;
 import com.basis.basis.R;
 
 import java.util.HashMap;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ArrancarServicio();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String usuario = sharedPreferences.getString("usuario","default");
         String password = sharedPreferences.getString("password", "default");
@@ -43,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 
             RequestIngreso(usuario, password);
         }
+    }
+
+    private void ArrancarServicio() {
+        //startService(new Intent(this, MyIntentService.class));
+        Intent serviceIntent = new Intent(this, MyIntentService.class);
+        startService(serviceIntent);
     }
 
     private void RequestIngreso(final String usuario, final String password) {

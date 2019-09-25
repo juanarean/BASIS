@@ -103,6 +103,7 @@ public class LoginFragment extends Fragment {
 
                 // Add the request to the RequestQueue.
                 queue.add(stringRequest);
+
                 Intent intent = new Intent(getActivity(),Main2Activity.class);
                 startActivity(intent);
 
