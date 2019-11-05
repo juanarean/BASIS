@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.basis.basis.BAS;
+import com.basis.basis.retrofit.Responses.Clientes;
 import com.basis.basis.ui.BASFragment.OnListFragmentInteractionListener;
 import com.basis.basis.R;
 import java.util.List;
@@ -17,10 +18,10 @@ import java.util.List;
  */
 public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecyclerViewAdapter.ViewHolder> {
 
-    private final List<BAS> mValues;
+    private final List<Clientes> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyBASRecyclerViewAdapter(List<BAS> items, OnListFragmentInteractionListener listener) {
+    public MyBASRecyclerViewAdapter(List<Clientes> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,8 +36,8 @@ public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mBasView.setText(mValues.get(position).getBasNumber());
-        holder.mClientView.setText(mValues.get(position).getCliente());
+        holder.mBasView.setText(mValues.get(position).getNombre());
+        holder.mClientView.setText(mValues.get(position).getDireccion());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecycler
         public final View mView;
         public final TextView mBasView;
         public final TextView mClientView;
-        public BAS mItem;
+        public Clientes mItem;
 
         public ViewHolder(View view) {
             super(view);

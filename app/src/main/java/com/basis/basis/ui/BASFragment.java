@@ -9,11 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.basis.basis.BAS;
 import com.basis.basis.R;
+import com.basis.basis.retrofit.AuthBasisClient;
+import com.basis.basis.retrofit.AuthBasisService;
+import com.basis.basis.retrofit.Responses.Clientes;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -25,7 +34,9 @@ public class BASFragment extends Fragment {
 
     RecyclerView recyclerView;
     MyBASRecyclerViewAdapter adapter;
-    List<BAS> basList;
+    List<Clientes> basList;
+    AuthBasisService authBasisService;
+    AuthBasisClient authBasisClient;
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -38,6 +49,8 @@ public class BASFragment extends Fragment {
      */
     public BASFragment() {
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,21 +66,43 @@ public class BASFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             basList = new ArrayList<>();
-            basList.add(new BAS("BAS19-0001-01", "Phoenix"));
-            basList.add(new BAS("BAS19-0002-01", "Mabxience"));
-            basList.add(new BAS("BAS19-0003-01", "Catalent"));
+            retrofitInit();     //Inicio retrofit
 
-            adapter = new MyBASRecyclerViewAdapter(basList, mListener);
-            recyclerView.setAdapter(adapter);
+            Call<List<Clientes>> call = authBasisService.getAllClients();
+            call.enqueue(new Callback<List<Clientes>>() {
+                @Override
+                public void onResponse(Call<List<Clientes>> call, Response<List<Clientes>> response) {
+                    if(response.isSuccessful()) {
+                        basList = response.body();
+                        adapter = new MyBASRecyclerViewAdapter(basList, mListener);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(getActivity(),"Respuesta incorrecta", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Clientes>> call, Throwable t) {
+                    Toast.makeText(getActivity(),"Error en la conexion", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         }
         return view;
+    }
+
+    private void retrofitInit() {
+        authBasisClient = AuthBasisClient.getInstance();
+        authBasisService = authBasisClient.getAuthBasisService();
     }
 
 
@@ -100,6 +135,6 @@ public class BASFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(BAS item);
+        void onListFragmentInteraction(Clientes item);
     }
 }
