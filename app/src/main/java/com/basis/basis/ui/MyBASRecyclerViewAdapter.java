@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Clientes> mValues;
+    private List<Clientes> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MyBASRecyclerViewAdapter(List<Clientes> items, OnListFragmentInteractionListener listener) {
@@ -35,25 +35,34 @@ public class MyBASRecyclerViewAdapter extends RecyclerView.Adapter<MyBASRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mBasView.setText(mValues.get(position).getNombre());
-        holder.mClientView.setText(mValues.get(position).getDireccion());
+        if(mValues != null) {
+            holder.mItem = mValues.get(position);
+            holder.mBasView.setText(mValues.get(position).getNombre());
+            holder.mClientView.setText(mValues.get(position).getDireccion());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        // Notify the active callbacks interface (the activity, if the
+                        // fragment is attached to one) that an item has been selected.
+                        mListener.onListFragmentInteraction(holder.mItem);
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    public void setData(List<Clientes> clientesList) {
+        this.mValues = clientesList;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        if(mValues != null)
+            return mValues.size();
+        else return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

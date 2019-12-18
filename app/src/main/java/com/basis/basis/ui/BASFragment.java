@@ -3,6 +3,9 @@ package com.basis.basis.ui;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import com.basis.basis.BAS;
 import com.basis.basis.R;
+import com.basis.basis.data.BasisViewModel;
 import com.basis.basis.retrofit.AuthBasisClient;
 import com.basis.basis.retrofit.AuthBasisService;
 import com.basis.basis.retrofit.Responses.Clientes;
@@ -37,6 +41,7 @@ public class BASFragment extends Fragment {
     List<Clientes> basList;
     AuthBasisService authBasisService;
     AuthBasisClient authBasisClient;
+    BasisViewModel basisViewModel;
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -55,6 +60,9 @@ public class BASFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        basisViewModel = ViewModelProviders.of(getActivity())
+                .get(BasisViewModel.class);
 
     }
 
@@ -75,26 +83,15 @@ public class BASFragment extends Fragment {
             basList = new ArrayList<>();
             retrofitInit();     //Inicio retrofit
 
-            Call<List<Clientes>> call = authBasisService.getAllClients();
-            call.enqueue(new Callback<List<Clientes>>() {
+            basisViewModel.getClientes().observe(getActivity(), new Observer<List<Clientes>>() {
                 @Override
-                public void onResponse(Call<List<Clientes>> call, Response<List<Clientes>> response) {
-                    if(response.isSuccessful()) {
-                        basList = response.body();
-                        adapter = new MyBASRecyclerViewAdapter(basList, mListener);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        Toast.makeText(getActivity(),"Respuesta incorrecta", Toast.LENGTH_LONG).show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<List<Clientes>> call, Throwable t) {
-                    Toast.makeText(getActivity(),"Error en la conexion", Toast.LENGTH_LONG).show();
+                public void onChanged(List<Clientes> clientes) {
+                    basList = clientes;
+                    adapter.setData(basList);
                 }
             });
-
+            adapter = new MyBASRecyclerViewAdapter(basList, mListener);
+            recyclerView.setAdapter(adapter);
 
         }
         return view;
